@@ -1,24 +1,30 @@
-import logo from './logo.svg';
+// Import necessary libraries and components
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import theme from '../src/common/theme';
+import HomePage from '../src/pages/HomePage'; // Import the HomePage component
+import Layout from '../src/common/Layout'; // Import the Layout component
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    // Apply the custom theme using ThemeProvider
+    <ThemeProvider theme={theme}>
+      {/* CssBaseline to normalize CSS across browsers */}
+      <CssBaseline />
+      <Router>
+        <Layout>
+          <Routes>
+            {/* Define a route for the HomePage */}
+            <Route path="/" element={<HomePage />} />
+            
+            {/* Add more routes here as your application grows */}
+          </Routes>
+        </Layout>
+      </Router>
+    </ThemeProvider>
   );
 }
 
