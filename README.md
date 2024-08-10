@@ -79,7 +79,7 @@ Para executar este projeto localmente, siga estas etapas:
 1. Clone este repositório:
 
    ```bash
-   git clone https://github.com/seu-usuario/barberhub.git
+   git clone https://github.com/lucaspianaro/barberhub.git
    ```
 
 2. Navegue até o diretório do projeto:
