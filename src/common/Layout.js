@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import {
   Box,
-  Container,
   CssBaseline,
   AppBar,
   Toolbar,
@@ -13,6 +12,7 @@ import {
   ListItem,
   ListItemText,
   Divider,
+  Container,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -102,9 +102,11 @@ const Layout = ({ children }) => {
         {drawer}
       </Drawer>
 
-      <Container component="main" sx={{ flexGrow: 1, padding: 3 }}>
-        {children}
-      </Container>
+      <Box component="main" sx={{ flexGrow: 1, width: '100%', padding: 0 }}>
+        <Container maxWidth={false} disableGutters>
+          {children}
+        </Container>
+      </Box>
 
       <Box component="footer" sx={{ backgroundColor: 'primary.dark', padding: 2, color: 'text.primary', textAlign: 'center' }}>
         <Typography variant="body2" sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginBottom: 1 }}>
