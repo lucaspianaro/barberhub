@@ -1,4 +1,4 @@
-// theme.js
+// src/common/theme.js
 
 import { createTheme } from '@mui/material/styles';
 

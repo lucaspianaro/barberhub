@@ -23,7 +23,9 @@ O projeto utiliza as seguintes dependências:
 Para instalar todas as dependências necessárias, execute o seguinte comando:
 
 ```bash
+npm install
 npm install @mui/material @emotion/react @emotion/styled react-router-dom firebase
+npm install react-big-calendar moment
 ```
 
 ## Funcionalidades

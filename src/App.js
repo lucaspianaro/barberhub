@@ -1,31 +1,72 @@
-// Import necessary libraries and components
+// src/App.js
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { AuthProvider, useAuth } from './hooks/useAuthState';
 import { ThemeProvider } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import theme from '../src/common/theme';
-import HomePage from '../src/pages/HomePage'; // Import the HomePage component
-import Layout from '../src/common/Layout'; // Import the Layout component
+import { CssBaseline, CircularProgress, Box } from '@mui/material';
+import theme from './common/theme';
+import HomePage from './pages/HomePage'; 
+import Login from './pages/Login';
+import Appointments from './pages/Appointments';
+import Layout from './common/Layout';
 
-function App() {
+// Component for authenticated routes
+function AuthenticatedApp() {
+  const { currentUser, loading } = useAuth();
+  const location = useLocation();
+
+  if (loading) {
+    // Show a loading indicator while the authentication state is being checked
+    return (
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100vh',
+          bgcolor: 'background.default',
+          color: 'text.primary',
+        }}
+      >
+        <CircularProgress size={60} />
+      </Box>
+    );
+  }
+
   return (
-    // Apply the custom theme using ThemeProvider
-    <ThemeProvider theme={theme}>
-      {/* CssBaseline to normalize CSS across browsers */}
-      <CssBaseline />
-      <Router>
-        <Layout>
-          <Routes>
-            {/* Define a route for the HomePage */}
-            <Route path="/" element={<HomePage />} />
-            
-            {/* Add more routes here as your application grows */}
-          </Routes>
-        </Layout>
-      </Router>
-    </ThemeProvider>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/login"
+          element={!currentUser ? <Login /> : <Navigate to="/" replace />}
+        />
+        <Route
+          path="/appointments"
+          element={
+            currentUser ? (
+              <Appointments />
+            ) : (
+              <Navigate to="/login" state={{ from: location }} replace />
+            )
+          }
+        />
+        {/* Add more routes here as your application grows */}
+      </Routes>
+    </Layout>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <AuthProvider>
+        <Router>
+          <AuthenticatedApp />
+        </Router>
+      </AuthProvider>
+    </ThemeProvider>
+  );
+}
